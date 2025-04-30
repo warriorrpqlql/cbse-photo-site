@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CBSE Photo Viewer</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+    input, button { font-size: 18px; padding: 10px; }
+    img { margin-top: 20px; max-width: 300px; }
+  </style>
+</head>
+<body>
+  <h2>Enter GR Number to View Photo</h2>
+  <input type="text" id="grNumber" placeholder="Enter GR Number">
+  <button onclick="fetchPhoto()">Show Photo</button>
+  <div>
+    <img id="studentPhoto" src="" alt="Photo will appear here">
+  </div>
+
+  <script>
+    function fetchPhoto() {
+      const gr = document.getElementById("grNumber").value.trim();
+      fetch('photos.json')
+        .then(response => response.json())
+        .then(data => {
+          if (data[gr]) {
+            document.getElementById("studentPhoto").src = "images/" + data[gr];
+          } else {
+            document.getElementById("studentPhoto").src = "";
+            alert("Photo not found for GR number " + gr);
+          }
+        });
+    }
+  </script>
+</body>
+</html>
